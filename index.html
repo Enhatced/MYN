@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M&N Asociados - Especialistas Jurídicos</title>
+    <link rel="icon" type="image/svg+xml" href="./MYN_Logo.svg" sizes="32x32">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8B0000',
+                        secondary: '#1a1a1a',
+                    },
+                    borderRadius: {
+                        'xl': '1rem',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Great+Vibes&display=swap');
+
+        .slide-in {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.6s ease-out;
+        }
+
+        .fade-in.active {
+            opacity: 1;
+        }
+
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .scale-in.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .elegant-signature {
+            font-family: 'Great Vibes', cursive;
+            background: linear-gradient(45deg, #8B0000, #000000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.5rem;
+        }
+
+        .service-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 1rem;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .service-detail {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .service-card:hover .service-detail {
+            max-height: 500px;
+            transition: max-height 0.5s ease-in;
+        }
+
+        .practice-area-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .practice-area-card:hover {
+            transform: scale(1.05);
+        }
+
+        .practice-area-detail {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .practice-area-card:hover .practice-area-detail {
+            opacity: 1;
+        }
+
+        .nav-button {
+            @apply px-4 py-2 rounded-xl transition-all duration-300 text-gray-700 border border-gray-200;
+        }
+
+        .nav-button:hover {
+            @apply bg-primary/10 text-primary border-primary transform scale-105;
+        }
+
+        .carousel-control {
+            @apply absolute top-1/2 transform -translate-y-1/2 bg-white/90 p-4 rounded-full text-primary 
+                   hover:bg-white hover:scale-110 transition-all duration-300 shadow-lg z-10
+                   focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+        }
+
+        @media (max-width: 768px) {
+            .service-card {
+                @apply mx-4;
+            }
+            
+            .carousel-control {
+                @apply p-3;
+            }
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Navbar actualizado -->
+    <nav class="fixed w-full bg-white shadow-lg z-50">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center">
+                    <img 
+                        src="./MYN_Logo_Slogan.svg" 
+                        alt="M&N Asociados Logo" 
+                        class="h-20 w-auto"
+                    >
+                </div>
+
+                <div class="hidden md:flex items-center justify-center flex-1">
+                    <div class="flex items-center space-x-12">
+                        <a href="#inicio" class="nav-button">Inicio</a>
+                        <a href="#servicios" class="nav-button">Servicios</a>
+                        <a href="#areas" class="nav-button">Áreas</a>
+                    </div>
+                </div>
+
+                <button 
+                    onclick="toggleWhatsApp()"
+                    class="bg-primary text-white px-6 py-2 rounded-xl hover:bg-red-800 transition-all duration-300 shadow-md hover:shadow-lg"
+                >
+                    Consulta Gratuita
+                </button>
+
+                <button id="mobile-menu-button" class="md:hidden text-gray-700 ml-4">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile menu (actualizado) -->
+    <div id="mobile-menu" class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-40 hidden">
+        <div class="bg-white w-64 h-full transform transition-transform duration-300 -translate-x-full rounded-r-xl">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-8">
+                    <img 
+                        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/M%20(1)-4QvyLFRHsdK45azHNDuyXFrkXE7ZOc.svg" 
+                        alt="M&N Asociados Logo" 
+                        class="h-12 w-auto"
+                    >
+                    <button id="close-menu" class="text-gray-700">
+                        <i class="fas fa-times text-2xl"></i>
+                    </button>
+                </div>
+                <div class="flex flex-col space-y-4">
+                    <a href="#inicio" class="text-gray-700 hover:text-primary transition-colors">Inicio</a>
+                    <a href="#servicios" class="text-gray-700 hover:text-primary transition-colors">Servicios</a>
+                    <a href="#areas" class="text-gray-700 hover:text-primary transition-colors">Áreas</a>
+                    <button 
+                        onclick="toggleWhatsApp()"
+                        class="bg-primary text-white px-6 py-2 rounded text-center hover:bg-red-800 transition-colors"
+                    >
+                        Consulta Gratuita
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section with Carousel -->
+    <section id="inicio" class="pt-20">
+        <div class="container mx-auto px-6 py-16">
+            <div class="relative h-[400px] overflow-hidden rounded-xl shadow-xl">
+                <div id="carousel" class="h-full">
+                    <!-- Slide 1 -->
+                    <div class="absolute inset-0 transition-opacity duration-500">
+                        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+                        <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Servicios Jurídicos" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 flex items-center justify-center text-white text-center">
+                            <div class="max-w-3xl px-6">
+                                <h1 class="text-4xl md:text-5xl font-bold mb-4 slide-in">Legalización de Predios</h1>
+                                <p class="text-xl md:text-2xl mb-8 slide-in">Urbanos y Rurales en Posesión</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="absolute inset-0 transition-opacity duration-500 opacity-0">
+                        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+                        <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Pensiones" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 flex items-center justify-center text-white text-center">
+                            <div class="max-w-3xl px-6">
+                                <h1 class="text-4xl md:text-5xl font-bold mb-4 slide-in">Régimen Pensional</h1>
+                                <p class="text-xl md:text-2xl mb-8 slide-in">Asesoría Especializada en Pensiones</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="absolute inset-0 transition-opacity duration-500 opacity-0">
+                        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+                        <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Cobros y Títulos" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 flex items-center justify-center text-white text-center">
+                            <div class="max-w-3xl px-6">
+                                <h1 class="text-4xl md:text-5xl font-bold mb-4 slide-in">Cobros y Títulos</h1>
+                                <p class="text-xl md:text-2xl mb-8 slide-in">Gestión Eficiente de Documentos Legales</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Carousel controls -->
+                <button onclick="prevSlide()" class="carousel-control left-4" aria-label="Anterior">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button onclick="nextSlide()" class="carousel-control right-4" aria-label="Siguiente">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Servicios con animaciones mejoradas -->
+    <section id="servicios" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16 slide-in">Servicios Especializados</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Legalización de Predios -->
+                <div class="service-card bg-white rounded-xl shadow-lg p-8 scale-in">
+                    <div class="text-center mb-6">
+                        <div class="inline-block p-4 rounded-full bg-red-50 text-primary">
+                            <i class="fas fa-home text-4xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mt-4">Legalización de Predios</h3>
+                    </div>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            Predios urbanos y rurales
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            Posesión de tierras
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            Títulos de propiedad
+                        </li>
+                    </ul>
+                    <div class="service-detail mt-4">
+                        <p class="text-gray-600">Nuestro equipo de expertos le guiará a través del complejo proceso de legalización de predios, asegurando que todos los aspectos legales estén cubiertos.</p>
+                        <button onclick="toggleWhatsApp()" class="mt-4 w-full bg-primary text-white py-2 rounded-lg hover:bg-red-800 transition-colors">
+                            Consultar ahora
+                        </button>
+                    </div>
+                </div>
+                <!-- Régimen Pensional -->
+                <div class="service-card bg-white rounded-xl shadow-lg p-8 scale-in">
+                    <div class="text-center mb-6">
+                        <div class="inline-block p-4 rounded-full bg-red-50 text-primary">
+                            <i class="fas fa-balance-scale text-4xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mt-4">Régimen Pensional</h3>
+                    </div>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            Pensión de vejez e invalidez
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            Pensión de sobrevivientes
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            Traslado entre regímenes
+                        </li>
+                    </ul>
+                    <div class="service-detail mt-4">
+                        <p class="text-gray-600">Ofrecemos asesoría especializada para garantizar que usted obtenga los beneficios pensionales que merece, navegando por las complejidades del sistema.</p>
+                        <button onclick="toggleWhatsApp()" class="mt-4 w-full bg-primary text-white py-2 rounded-lg hover:bg-red-800 transition-colors">
+                            Consultar ahora
+                        </button>
+                    </div>
+                </div>
+                <!-- Cobros y Títulos -->
+                <div class="service-card bg-white rounded-xl shadow-lg p-8 scale-in">
+                    <div class="text-center mb-6">
+                        <div class="inline-block p-4 rounded-full bg-red-50 text-primary">
+                            <i class="fas fa-file-invoice-dollar text-4xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mt-4">Cobros y Títulos</h3>
+                    </div>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            Pagarés y letras
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            Cheques y facturas
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            Títulos ejecutivos
+                        </li>
+                    </ul>
+                    <div class="service-detail mt-4">
+                        <p class="text-gray-600">Gestionamos eficientemente sus cobros y títulos, asegurando la protección de sus intereses financieros y legales en todo momento.</p>
+                        <button onclick="toggleWhatsApp()" class="mt-4 w-full bg-primary text-white py-2 rounded-lg hover:bg-red-800 transition-colors">
+                            Consultar ahora
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Áreas de Práctica con animaciones mejoradas -->
+    <section id="areas" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16 slide-in">Áreas de Práctica</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                <!-- Civil -->
+                <div class="practice-area-card bg-gray-50 p-8 rounded-xl text-center fade-in">
+                    <div class="text-primary text-3xl mb-4">
+                        <i class="fas fa-landmark"></i>
+                    </div>
+                    <h3 class="text-lg font-bold">Civil</h3>
+                    <div class="practice-area-detail mt-4">
+                        <p class="text-sm text-gray-600">Especialistas en contratos, responsabilidad civil y litigios.</p>
+                        <button onclick="toggleWhatsApp()" class="mt-4 w-full bg-primary text-white py-2 rounded-lg hover:bg-red-800 transition-colors text-sm">
+                            Más información
+                        </button>
+                    </div>
+                </div>
+                <!-- Laboral -->
+                <div class="practice-area-card bg-gray-50 p-8 rounded-xl text-center fade-in">
+                    <div class="text-primary text-3xl mb-4">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3 class="text-lg font-bold">Laboral</h3>
+                    <div class="practice-area-detail mt-4">
+                        <p class="text-sm text-gray-600">Asesoría en derechos laborales, contratos y conflictos laborales.</p>
+                        <button onclick="toggleWhatsApp()" class="mt-4 w-full bg-primary text-white py-2 rounded-lg hover:bg-red-800 transition-colors text-sm">
+                            Más información
+                        </button>
+                    </div>
+                </div>
+                <!-- Administrativo -->
+                <div class="practice-area-card bg-gray-50 p-8 rounded-xl text-center fade-in">
+                    <div class="text-primary text-3xl mb-4">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3 class="text-lg font-bold">Administrativo</h3>
+                    <div class="practice-area-detail mt-4">
+                        <p class="text-sm text-gray-600">Representación ante entidades públicas y contratación estatal.</p>
+                        <button onclick="toggleWhatsApp()" class="mt-4 w-full bg-primary text-white py-2 rounded-lg hover:bg-red-800 transition-colors text-sm">
+                            Más información
+                        </button>
+                    </div>
+                </div>
+                <!-- Familia -->
+                <div class="practice-area-card bg-gray-50 p-8 rounded-xl text-center fade-in">
+                    <div class="text-primary text-3xl mb-4">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="text-lg font-bold">Familia</h3>
+                    <div class="practice-area-detail mt-4">
+                        <p class="text-sm text-gray-600">Expertos en divorcios, custodia y derecho de familia.</p>
+                        <button onclick="toggleWhatsApp()" class="mt-4 w-full bg-primary text-white py-2 rounded-lg hover:bg-red-800 transition-colors text-sm">
+                            Más información
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (sin cambios) -->
+    <footer class="bg-white text-gray-800 py-16">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <!-- Logo y Descripción -->
+                <div class="text-center md:text-left">
+                    <img 
+                        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/M%20(1)-4QvyLFRHsdK45azHNDuyXFrkXE7ZOc.svg" 
+                        alt="M&N Asociados Logo" 
+                        class="h-24 mx-auto md:mx-0 mb-4"
+                    >
+                    <p class="elegant-signature text-2xl mb-2">M&N Asociados</p>
+                    <p class="elegant-signature text-2xl mb-2">Especialistas Jurídicos</p>
+                </div>
+
+                <!-- Sedes -->
+                <div>
+                    <h4 class="text-xl font-bold mb-6">Sedes</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt w-5 text-primary"></i>
+                            <span class="ml-2">Villavicencio</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-globe w-5 text-primary"></i>
+                            <span class="ml-2">Virtual</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Contacto -->
+                <div>
+                    <h4 class="text-xl font-bold mb-6">Contacto</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-center">
+                            <i class="fas fa-phone w-5 text-primary"></i>
+                            <a href="tel:3107503531" class="ml-2 hover:text-primary transition-colors">310 750 3531</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone w-5 text-primary"></i>
+                            <a href="tel:3126136947" class="ml-2 hover:text-primary transition-colors">312 613 6947</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope w-5 text-primary"></i>
+                            <a href="/cdn-cgi/l/email-protection#92fffcf3e1fdf1fbf3f6fde1a3d2f5fff3fbfebcf1fdff" class="ml-2 hover:text-primary transition-colors">
+                                <span class="__cf_email__" data-cfemail="0b66656a786468626a6f64783a4b6c666a626725686466">[email&#160;protected]</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Horario -->
+                <div>
+                    <h4 class="text-xl font-bold mb-6">Horario de Atención</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-center">
+                            <i class="fas fa-clock w-5 text-primary"></i>
+                            <span class="ml-2">Lunes a Viernes</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-clock w-5 text-primary"></i>
+                            <span class="ml-2">8:00 AM - 6:00 PM</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-300 mt-12 pt-8 text-center">
+                <p class="text-sm text-gray-600">© 2024 M&N Asociados. Todos los derechos reservados.</p>
+                <p class="elegant-signature mt-4">Especialistas Jurídicos</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Chat (reposicionado) -->
+    <div id="whatsapp-chat" class="fixed bottom-4 right-4 z-50">
+        <div id="whatsapp-popup" class="hidden bg-white rounded-lg shadow-xl w-80">
+            <div class="p-4 bg-green-500 text-white rounded-t-lg">
+                <h3 class="font-bold">!!Consulta Gratis!!, Te atenderemos de inmediato</h3>
+            </div>
+            <div class="p-4">
+                <textarea 
+                    id="whatsapp-message" 
+                    class="w-full p-2 border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-green-500" 
+                    rows="3"
+                    placeholder="Escribe tu mensaje aquí..."
+                ></textarea>
+                <button 
+                    onclick="sendWhatsAppMessage()" 
+                    class="mt-2 w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition-colors"
+                >
+                    Enviar mensaje
+                </button>
+            </div>
+        </div>
+        <button 
+            id="whatsapp-toggle" 
+            class="bg-green-500 text-white p-4 rounded-full shadow-xl hover:bg-green-600 transition-all duration-300 hover:scale-110"
+        >
+            <i class="fab fa-whatsapp text-3xl"></i>
+        </button>
+    </div>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Mobile menu functionality
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const closeMenu = document.getElementById('close-menu');
+
+        function toggleMobileMenu() {
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.remove('hidden');
+                requestAnimationFrame(() => {
+                    mobileMenu.querySelector('div').classList.remove('-translate-x-full');
+                });
+            } else {
+                mobileMenu.querySelector('div').classList.add('-translate-x-full');
+                setTimeout(() => {
+                    mobileMenu.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        mobileMenuButton.addEventListener('click', toggleMobileMenu);
+        closeMenu.addEventListener('click', toggleMobileMenu);
+
+        // WhatsApp functionality
+        const whatsappToggle = document.getElementById('whatsapp-toggle');
+        const whatsappPopup = document.getElementById('whatsapp-popup');
+        let isPopupOpen = false;
+
+        function toggleWhatsApp() {
+            isPopupOpen = !isPopupOpen;
+            whatsappPopup.classList.toggle('hidden');
+        }
+
+        whatsappToggle.addEventListener('click', toggleWhatsApp);
+
+        function sendWhatsAppMessage() {
+            const message = document.getElementById('whatsapp-message').value;
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/573107503531?text=${encodedMessage}`, '_blank');
+            document.getElementById('whatsapp-message').value = '';
+            toggleWhatsApp();
+        }
+
+        // Scroll Reveal
+        function reveal() {
+            const reveals = document.querySelectorAll('.slide-in, .fade-in, .scale-in');
+            
+            reveals.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', reveal);
+        window.addEventListener('load', reveal);
+
+        // Carousel functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('#carousel > div');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.style.opacity = i === index ? '1' : '0';
+                slide.style.transition = 'opacity 0.5s ease-in-out';
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        // Auto-advance carousel with pause on hover
+        let carouselInterval = setInterval(nextSlide, 2000);
+
+        document.getElementById('carousel').addEventListener('mouseenter', () => {
+            clearInterval(carouselInterval);
+        });
+
+        document.getElementById('carousel').addEventListener('mouseleave', () => {
+            carouselInterval = setInterval(nextSlide, 2000);
+        });
+
+        // Initialize the first slide
+        showSlide(currentSlide);
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                const headerOffset = 100;
+                const elementPosition = target.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
